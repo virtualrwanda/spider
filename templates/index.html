@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Raspberry Pi Web Portal + SSH</title>
+    <style>
+        body { font-family: Arial; margin: 40px; background: #f9f9f9; }
+        .card { padding: 15px; background: white; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        iframe { width: 100%; height: 300px; border: 1px solid #ccc; margin-top: 10px; }
+        textarea { width: 100%; height: 150px; }
+    </style>
+</head>
+<body>
+    <h1>🧭 Raspberry Pi Web Portal</h1>
+
+    <h2>🌐 Web Apps</h2>
+    {% for app in apps %}
+        <div class="card">
+            <strong>{{ app.name }}</strong><br>
+            <a href="{{ app.url }}" target="_blank">Open in New Tab</a>
+            <iframe src="{{ app.url }}"></iframe>
+        </div>
+    {% endfor %}
+
+    <h2>🖥️ Remote SSH Command</h2>
+    <form method="POST">
+        <label>Enter command:</label><br>
+        <input type="text" name="command" style="width: 100%;" required>
+        <br><br>
+        <button type="submit">Execute</button>
+    </form>
+
+    {% if output %}
+        <h3>✅ Output:</h3>
+        <textarea readonly>{{ output }}</textarea>
+    {% endif %}
+    {% if error %}
+        <h3 style="color: red;">❌ Error:</h3>
+        <textarea readonly>{{ error }}</textarea>
+    {% endif %}
+</body>
+</html>
